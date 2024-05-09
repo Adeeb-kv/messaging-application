@@ -1,20 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View,Image ,TextInput,ScrollView,TouchableOpacity} from 'react-native';
 
-export default function login() {
+import { StatusBar } from 'expo-status-bar';
+import { useNavigation } from "@react-navigation/native";
+import { StyleSheet, Text, View,Image ,TextInput,ScrollView,TouchableOpacity} from 'react-native';
+import { useState } from 'react';
+
+export default function Login() {
+  const [username,setuserName]=useState("")
+  const [password,setpassWord]=useState("")
+  const navigator=useNavigation()
   return (
     <ScrollView  style={styles.container}>
       <View style={styles.sum}>
       <StatusBar style="auto" />
 
-     <Image style={styles.adacode} source={require("../assets/adacode1.png")}></Image>
+     <Image style={styles.adacode} source={require("../assets/paper-plane.gif")}></Image>
     
      <Text style={styles.Text}>Adacode Solutions</Text>
      <View style={styles.blue}>
      <View style={styles.boxes}>
-     <TextInput  style={styles.input1} placeholder='enter username'onChangeText={value => console.log(value)} ></TextInput>
-     <TextInput  style={styles.input2} placeholder='enter password' onChangeText={value => console.log(value)}></TextInput>
-     <TouchableOpacity  style={styles.button} onPress={()=>console.log("v")} ><Text>login</Text>
+     <TextInput  style={styles.input1} placeholder='enter username'onChangeText={value => setuserName(value)} ></TextInput>
+     <TextInput  style={styles.input2} placeholder='enter password' onChangeText={value => setpassWord(value)}></TextInput>
+     <TouchableOpacity  style={styles.button} onPress={()=>navigator.navigate("Chat")} ><Text>login</Text>
      
      
      
@@ -41,18 +47,19 @@ const styles = StyleSheet.create({
     justifyContent:'flex-start',
   },
   adacode:{
-    width:200,
-    height:200,
-    margin:15,
+    width:90,
+    height:90,
+    margin:60,
   },
   Text:{
     fontSize:30,
     margin:10,
     padding:0,
+    fontWeight:'bold',
   },
   blue:{
     fex:1,
-    backgroundColor: 'skyblue', 
+    backgroundColor: '#9747FF', 
     width:390,
     height:700,
     position:'relative',
