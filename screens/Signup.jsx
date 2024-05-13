@@ -1,11 +1,29 @@
 import { SafeAreaView, StyleSheet,Text,View,TouchableOpacity,Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { TextInput } from "react-native-gesture-handler"
+import { TextInput } from "react-native-gesture-handler";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { useState } from 'react';
+
 export default function App() {
     const navigator=useNavigation()
+    const [email,setEmail]=useState("")
+    const [password,setpassWord]=useState("")
 
+function handleSubmit(){
+        const auth = getAuth();
+createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    console.log("accountcreated")
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log("notcreated",errorMessage)
+  });
 
-
+    }
 
     return (
         <SafeAreaView style={styles.main}>
@@ -13,13 +31,13 @@ export default function App() {
             <Text style={styles.sign}>Sign up</Text>
             </View>
             <View style={styles.box} >
-            <TextInput style={styles.textbox} placeholder="email" placeholderTextColor={'black'}></TextInput>
-            <TextInput style={styles.textbox} placeholder="password" placeholderTextColor={'black'}></TextInput>
-            <TouchableOpacity style={styles.button} ><Text>Sign Up</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.img}><Image  style={styles.immage} source={require("../assets/googgle.jpg")}></Image></TouchableOpacity>
+            <TextInput style={styles.textbox} placeholder="email"  onChangeText={value => setEmail(value)}></TextInput>
+            <TextInput style={styles.textbox} placeholder="password" onChangeText={value => setpassWord(value)} ></TextInput>
+            <TouchableOpacity style={styles.button} onPress={handleSubmit} ><Text>Sign Up</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.img} ><Image  style={styles.immage} source={require("../assets/googgle.jpg")}></Image></TouchableOpacity>
             </View>
             <View style={styles.lasttext}>
-            <Text>Already  a user?</Text><TouchableOpacity onPress={()=>navigator.navigate('Login')}><Text style={styles.login}>Login</Text></TouchableOpacity>
+            <Text>Already  a user?</Text><TouchableOpacity onPress={() => navigator.navigate("Login")}><Text style={styles.login}>Login</Text></TouchableOpacity>
             </View>
 
         </SafeAreaView>
